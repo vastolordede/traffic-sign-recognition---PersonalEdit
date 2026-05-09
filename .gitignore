@@ -1,0 +1,67 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment / local libraries
+.venv/
+venv/
+env/
+
+# Jupyter cache
+.ipynb_checkpoints/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.*
+
+# Dataset - ignore all real dataset files
+data/raw/**
+data/processed/**
+
+# Keep dataset folder placeholders
+!data/raw/
+!data/raw/.gitkeep
+
+!data/processed/
+!data/processed/.gitkeep
+
+!data/processed/train/
+!data/processed/train/.gitkeep
+
+!data/processed/val/
+!data/processed/val/.gitkeep
+
+!data/processed/test/
+!data/processed/test/.gitkeep
+
+# Sample images for demo
+!data/sample_images/
+!data/sample_images/.gitkeep
+
+# Trained models / checkpoints
+models/**
+*.keras
+*.h5
+*.ckpt
+*.tflite
+*.pkl
+
+!models/
+!models/.gitkeep
+
+# Generated results
+results/figures/*
+results/reports/*
+results/predictions/*
+
+!results/figures/.gitkeep
+!results/reports/.gitkeep
+!results/predictions/.gitkeep

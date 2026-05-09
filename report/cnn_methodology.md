@@ -1,0 +1,11 @@
+# CNN Baseline Methodology
+
+Trong đề tài này, nhóm xây dựng một mô hình CNN baseline bằng TensorFlow/Keras nhằm tạo mốc so sánh với các mô hình transfer learning. Bộ dữ liệu sử dụng là GTSRB - German Traffic Sign Recognition Benchmark, gồm 43 lớp biển báo giao thông. Dữ liệu được xử lý về cấu trúc `train`, `validation` và `test` để có thể đọc trực tiếp bằng `tf.keras.utils.image_dataset_from_directory`.
+
+Ảnh đầu vào được resize về kích thước 64x64 pixels nhằm giảm chi phí tính toán và phù hợp với điều kiện huấn luyện trên máy cá nhân. Trước khi đưa vào các lớp tích chập, giá trị pixel được chuẩn hóa từ khoảng [0, 255] về [0, 1] bằng lớp `Rescaling(1./255)`. Bước chuẩn hóa này giúp quá trình huấn luyện ổn định hơn và giúp mô hình hội tụ tốt hơn.
+
+Kiến trúc CNN baseline được xây dựng bằng `tf.keras.Sequential`. Mô hình gồm ba khối tích chập chính. Mỗi khối sử dụng lớp `Conv2D` để trích xuất đặc trưng không gian từ ảnh và lớp `MaxPooling2D` để giảm kích thước feature map, đồng thời giữ lại các đặc trưng quan trọng. Sau các khối tích chập, mô hình sử dụng `GlobalAveragePooling2D` để chuyển feature map thành vector đặc trưng gọn hơn, giúp giảm số lượng tham số so với `Flatten`. Tiếp theo, một lớp `Dense` được sử dụng để học quan hệ giữa các đặc trưng đã trích xuất và nhãn biển báo. Lớp `Dropout` được thêm vào nhằm giảm nguy cơ overfitting. Cuối cùng, lớp `Dense` với activation `softmax` được dùng để xuất xác suất dự đoán cho 43 lớp biển báo.
+
+Mô hình được compile với optimizer Adam, hàm mất mát `sparse_categorical_crossentropy` và metric `accuracy`. Trong quá trình huấn luyện, nhóm sử dụng `EarlyStopping` để dừng sớm khi validation loss không cải thiện, đồng thời sử dụng `ModelCheckpoint` để lưu lại phiên bản mô hình tốt nhất dựa trên validation accuracy. Model tốt nhất được lưu tại `models/cnn_baseline.keras`.
+
+CNN baseline đóng vai trò là mô hình nền để đánh giá hiệu quả của phương pháp học sâu cơ bản trên bài toán phân loại biển báo. Kết quả của CNN baseline sẽ được dùng làm mốc so sánh với các mô hình transfer learning như MobileNetV2 hoặc EfficientNetB0.

@@ -1,0 +1,45 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  python-check:
+    name: Python Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: |
+          python -m compileall src check_env.py
+
+      - name: Check environment
+        run: |
+          python check_env.py
+
+      - name: Import main libraries
+        run: |
+          python -c "import numpy,pandas,matplotlib,sklearn,tensorflow,cv2,PIL,streamlit,gradio; print('ALL MAIN LIBRARIES OK')"
