@@ -1,0 +1,11 @@
+GTSRB Dataset Summary
+
+Train images: 31367
+Validation images: 7842
+Test images: 12630
+Number of train classes: 43
+Number of validation classes: 43
+Number of test classes: 43
+
+Train class with most images: 2 (1800 images)
+Train class with fewest images: 0 (168 images)

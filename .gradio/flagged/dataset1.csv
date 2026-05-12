@@ -1,0 +1,5 @@
+Upload traffic sign image,Prediction,Top 5 confidence,timestamp
+.gradio\flagged\Upload traffic sign image\20ad155c1d3ea7e75047\Capture.JPG,"Predicted class: 7
+Confidence: 0.6629 (66.29%)","{""label"": ""Class 7"", ""confidences"": [{""label"": ""Class 7"", ""confidence"": 0.6629270911216736}, {""label"": ""Class 2"", ""confidence"": 0.30430832505226135}, {""label"": ""Class 5"", ""confidence"": 0.01922033540904522}, {""label"": ""Class 8"", ""confidence"": 0.005056367721408606}, {""label"": ""Class 1"", ""confidence"": 0.003475141478702426}]}",2026-05-11 17:17:29.921961
+.gradio\flagged\Upload traffic sign image\b50c943123a70e75b564\Capture.JPG,"Predicted class: 7
+Confidence: 0.6629 (66.29%)","{""label"": ""Class 7"", ""confidences"": [{""label"": ""Class 7"", ""confidence"": 0.6629270911216736}, {""label"": ""Class 2"", ""confidence"": 0.30430832505226135}, {""label"": ""Class 5"", ""confidence"": 0.01922033540904522}, {""label"": ""Class 8"", ""confidence"": 0.005056367721408606}, {""label"": ""Class 1"", ""confidence"": 0.003475141478702426}]}",2026-05-11 17:17:32.015285
