@@ -1,22 +1,25 @@
+# src/evaluate.py
 import tensorflow as tf
 
-from src.config import CNN_MODEL_PATH, CNN_FINAL_RESULT_PATH, REPORTS_DIR
+from src.config import (
+    CNN_FULL_MODEL_PATH,
+    CNN_FULL_RESULT_PATH,
+    REPORTS_DIR,
+)
 
 
-def load_cnn_model(model_path=CNN_MODEL_PATH):
+def load_model_from_path(model_path=CNN_FULL_MODEL_PATH):
     """
-    Load the best CNN baseline model saved by ModelCheckpoint.
+    Load a saved Keras model from a given path.
     """
 
     if not model_path.exists():
         raise FileNotFoundError(
             f"Model not found: {model_path}. "
-            "Please train the CNN model first in Week 2."
+            "Please train the model first."
         )
 
-    model = tf.keras.models.load_model(model_path)
-
-    return model
+    return tf.keras.models.load_model(model_path)
 
 
 def evaluate_model(model, test_ds):
@@ -29,20 +32,27 @@ def evaluate_model(model, test_ds):
     return test_loss, test_accuracy
 
 
-def save_cnn_final_result(test_loss, test_accuracy, save_path=CNN_FINAL_RESULT_PATH):
+def save_evaluation_result(
+    test_loss,
+    test_accuracy,
+    model_name="CNN Full GTSRB",
+    model_path=CNN_FULL_MODEL_PATH,
+    save_path=CNN_FULL_RESULT_PATH,
+):
     """
-    Save final CNN baseline result to text file.
+    Save final model result to a text file.
     """
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    save_path.parent.mkdir(parents=True, exist_ok=True)
 
-    content = f"""CNN Baseline Final Result
+    content = f"""{model_name} Final Result
 
 Model:
-- CNN Baseline using TensorFlow/Keras Sequential API
+- {model_name}
 
 Saved model:
-- models/cnn_baseline.keras
+- {model_path}
 
 Final evaluation:
 - Test loss: {test_loss:.4f}
@@ -50,8 +60,8 @@ Final evaluation:
 - Test accuracy percent: {test_accuracy * 100:.2f}%
 
 Note:
-- The model was saved using ModelCheckpoint during Week 2.
-- This result is used as the CNN baseline for comparison with transfer learning models.
+- The model was saved using ModelCheckpoint.
+- The result should be interpreted together with classification report and confusion matrix.
 """
 
     save_path.write_text(content, encoding="utf-8")
@@ -61,11 +71,18 @@ Note:
 
 def evaluate_cnn_final(test_ds):
     """
-    Load best CNN model, evaluate on test dataset, and save final result.
+    Load best CNN full model, evaluate it on test dataset, and save result.
     """
 
-    model = load_cnn_model()
+    model = load_model_from_path(CNN_FULL_MODEL_PATH)
     test_loss, test_accuracy = evaluate_model(model, test_ds)
-    save_cnn_final_result(test_loss, test_accuracy)
+
+    save_evaluation_result(
+        test_loss=test_loss,
+        test_accuracy=test_accuracy,
+        model_name="CNN Full GTSRB",
+        model_path=CNN_FULL_MODEL_PATH,
+        save_path=CNN_FULL_RESULT_PATH,
+    )
 
     return model, test_loss, test_accuracy
